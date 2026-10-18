@@ -103,7 +103,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 itemCount: chips.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 6),
+                separatorBuilder: (_, _) => const SizedBox(width: 6),
                 itemBuilder: (context, i) => _ChipFilter(
                   chip: chips[i],
                   aktif: chips[i].label == AppStrings.lessAi && _lebihSedikitAi,
@@ -173,7 +173,7 @@ class _ChipFilter extends StatelessWidget {
                 child: Image.asset(
                   chip.gambar!,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const ColoredBox(color: Colors.white54),
+                  errorBuilder: (_, _, _) => const ColoredBox(color: Colors.white54),
                 ),
               ),
             Padding(

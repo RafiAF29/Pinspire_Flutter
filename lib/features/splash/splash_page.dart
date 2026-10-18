@@ -27,8 +27,8 @@ class _SplashPageState extends State<SplashPage> {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder<void>(
         transitionDuration: const Duration(milliseconds: 400),
-        pageBuilder: (_, __, ___) => const WelcomePage(),
-        transitionsBuilder: (_, animasi, __, child) =>
+        pageBuilder: (_, _, _) => const WelcomePage(),
+        transitionsBuilder: (_, animasi, _, child) =>
             FadeTransition(opacity: animasi, child: child),
       ),
     );

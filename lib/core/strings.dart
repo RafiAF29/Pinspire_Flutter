@@ -140,7 +140,7 @@ class AppStrings {
   static const searchHint = 'Cari ide';
   static const cancel = 'Batal';
   static const ideasForYou = 'Ide-ide buat Anda';
-  static const popularOnPinterest = 'Populer di Pinterest';
+  static const popularOnPinspire = 'Populer di Pinspire';
   static const lessAi = 'Lebih Sedikit AI';
   static const searchInYourPins = 'Cari di Pin Anda';
 

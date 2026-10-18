@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -28,6 +29,10 @@ class AppTheme {
       canvasColor: Colors.white,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
+      // Font Inter dari Google Fonts — lebih premium dari font sistem.
+      textTheme: GoogleFonts.interTextTheme(
+        ThemeData(brightness: Brightness.light).textTheme,
+      ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: geser,
@@ -44,3 +49,4 @@ class AppTheme {
     );
   }
 }
+

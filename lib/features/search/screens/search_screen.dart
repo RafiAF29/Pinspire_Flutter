@@ -157,7 +157,7 @@ class _SlideBesar extends StatelessWidget {
             Image.asset(
               slide.gambar,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const ColoredBox(color: Color(0xFF3A3A35)),
+              errorBuilder: (_, _, _) => const ColoredBox(color: Color(0xFF3A3A35)),
             )
           else
             const ColoredBox(color: AppColors.chipGrey),
@@ -318,7 +318,7 @@ class _Bagian extends StatelessWidget {
                             ? Image.asset(
                                 data.gambar[i],
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) =>
+                                errorBuilder: (_, _, _) =>
                                     const ColoredBox(color: AppColors.chipGrey),
                               )
                             // Kosong dulu: sekat tipis antar kotak.

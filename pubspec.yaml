@@ -1,4 +1,4 @@
-name: pinterest1
+name: pinspire
 description: "Pinspire - kloning UI Pinterest (UTS Pemrograman Aplikasi Bergerak)."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -34,6 +34,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  # Font Google (Inter) untuk tipografi yang lebih premium.
+  google_fonts: ^6.2.1
 
   # Kamera sungguhan (HP Android/iOS, Windows, Web/Chrome).
   camera: ^0.11.0

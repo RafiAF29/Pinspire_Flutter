@@ -173,7 +173,7 @@ class _PapanTabState extends State<PapanTab> {
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     itemCount: belumDiatur.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 8),
+                    separatorBuilder: (_, _) => const SizedBox(width: 8),
                     itemBuilder: (context, i) => _Mungil(pin: belumDiatur[i]),
                   ),
                 ),

@@ -38,7 +38,7 @@ class HeroBadge extends StatelessWidget {
           duration: const Duration(milliseconds: 220),
           layoutBuilder: (current, previous) => Stack(
             alignment: Alignment.bottomLeft,
-            children: [...previous, if (current != null) current],
+            children: [...previous, ?current],
           ),
           transitionBuilder: (child, animation) => FadeTransition(
             opacity: animation,

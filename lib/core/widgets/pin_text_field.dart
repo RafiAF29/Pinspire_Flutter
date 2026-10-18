@@ -170,7 +170,7 @@ class _PinTextFieldState extends State<PinTextField> {
                   ],
                 ),
               ),
-              if (akhiran != null) akhiran,
+              ?akhiran,
             ],
           ),
         ),

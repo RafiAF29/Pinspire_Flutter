@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:pinterest1/app.dart';
-import 'package:pinterest1/core/navigation/tab_state.dart';
-import 'package:pinterest1/core/theme/app_theme.dart';
-import 'package:pinterest1/features/create/data/gallery_access_store.dart';
-import 'package:pinterest1/features/create/data/publish_store.dart';
-import 'package:pinterest1/features/pin/data/saved_store.dart';
-import 'package:pinterest1/features/pin/widgets/pin_card.dart';
-import 'package:pinterest1/features/pin_detail/widgets/save_button.dart';
-import 'package:pinterest1/features/shell/main_shell.dart';
+import 'package:pinspire/app.dart';
+import 'package:pinspire/core/navigation/tab_state.dart';
+import 'package:pinspire/core/theme/app_theme.dart';
+import 'package:pinspire/features/create/data/gallery_access_store.dart';
+import 'package:pinspire/features/create/data/publish_store.dart';
+import 'package:pinspire/features/pin/data/saved_store.dart';
+import 'package:pinspire/features/pin/widgets/pin_card.dart';
+import 'package:pinspire/features/pin_detail/widgets/save_button.dart';
+import 'package:pinspire/features/shell/main_shell.dart';
 
 /// Teks di dalam tombol Simpan/Disimpan/Profil
 /// (dipisah dari label bottom nav yang juga bertuliskan "Disimpan").

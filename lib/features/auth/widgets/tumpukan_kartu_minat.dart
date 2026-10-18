@@ -173,7 +173,7 @@ class _Kartu extends StatelessWidget {
           ),
           layoutBuilder: (saatIni, sebelumnya) => Stack(
             fit: StackFit.expand,
-            children: [...sebelumnya, if (saatIni != null) saatIni],
+            children: [...sebelumnya, ?saatIni],
           ),
           child: Image.asset(
             path,
