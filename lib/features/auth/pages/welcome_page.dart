@@ -82,18 +82,26 @@ class _WelcomePageState extends State<WelcomePage> {
     final email = _emailC.text.trim();
     FocusScope.of(context).unfocus();
     setState(() => _memuat = true);
-    final terdaftar = await authRepository.emailTerdaftar(email);
-    if (!mounted) return;
-    setState(() => _memuat = false);
+    try {
+      final terdaftar = await authRepository.emailTerdaftar(email);
+      if (!mounted) return;
+      setState(() => _memuat = false);
 
-    if (terdaftar) {
-      final akun = await tampilkanMasukSheet(context, email: email);
-      if (akun != null && mounted) _keBeranda(akun);
-    } else {
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => KataSandiPage(data: DataRegistrasi(email: email)),
-        ),
+      if (terdaftar) {
+        final akun = await tampilkanMasukSheet(context, email: email);
+        if (akun != null && mounted) _keBeranda(akun);
+      } else {
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => KataSandiPage(data: DataRegistrasi(email: email)),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      setState(() => _memuat = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal terhubung ke server: $e')),
       );
     }
   }
@@ -103,21 +111,28 @@ class _WelcomePageState extends State<WelcomePage> {
     final akun = await tampilkanAkunGoogleDialog(context);
     if (akun == null || !mounted) return;
 
-    if (await authRepository.emailTerdaftar(akun.email)) {
-      final pengguna = await authRepository.masukDenganGoogle(akun);
-      if (mounted) _keBeranda(pengguna);
-    } else {
-      if (!mounted) return;
-      await Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => JenisKelaminPage(
-            data: DataRegistrasi(
-              email: akun.email,
-              nama: akun.nama,
-              daftarDenganGoogle: true,
+    try {
+      if (await authRepository.emailTerdaftar(akun.email)) {
+        final pengguna = await authRepository.masukDenganGoogle(akun);
+        if (mounted) _keBeranda(pengguna);
+      } else {
+        if (!mounted) return;
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => JenisKelaminPage(
+              data: DataRegistrasi(
+                email: akun.email,
+                nama: akun.nama,
+                daftarDenganGoogle: true,
+              ),
             ),
           ),
-        ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal terhubung ke server: $e')),
       );
     }
   }
