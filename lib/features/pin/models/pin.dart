@@ -31,5 +31,18 @@ class Pin {
     this.bytes,
   });
 
-  // Nanti: factory Pin.fromJson(Map<String, dynamic> json) dari REST API.
+  /// Konstruktor dari JSON response REST API.
+  factory Pin.fromJson(Map<String, dynamic> json) {
+    return Pin(
+      id: json['id'].toString(),
+      title: json['title'] as String?,
+      image: json['image_url'] as String? ?? '',
+      aspect: double.tryParse(json['aspect'].toString()) ?? 1.0,
+      fallback: const Color(0xFFD9D9D2),
+      author: json['user']?['name'] as String? ?? 'Pinspire',
+      likes: json['likes_count'] as int? ?? 0,
+      comments: json['comments_count'] as int? ?? 0,
+      aiModified: json['ai_modified'] == true || json['ai_modified'] == 1,
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import '../models/data_registrasi.dart';
+import 'api_auth_repository.dart';
 
 class AuthException implements Exception {
   const AuthException(this.pesan);
@@ -32,8 +33,8 @@ abstract class AuthRepository {
   Future<void> keluar();
 }
 
-/// Ganti dengan `ApiAuthRepository()` saat backend Laravel sudah tersambung.
-final AuthRepository authRepository = MockAuthRepository();
+/// Ganti dengan MockAuthRepository() untuk testing tanpa server.
+final AuthRepository authRepository = ApiAuthRepository();
 
 class _Catatan {
   const _Catatan({

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../features/pin/models/pin.dart';
 
-/// Gambar pin dari assets (atau dari kamera lewat [Pin.bytes]). Kalau file belum ada, tampil kotak berwarna.
+/// Gambar pin: mendukung asset lokal, URL jaringan, dan hasil kamera (bytes).
+/// Kalau file belum ada atau gagal dimuat, tampil kotak berwarna.
 class PinImage extends StatelessWidget {
   final Pin pin;
   const PinImage(this.pin, {super.key});
+
+  bool get _isUrl =>
+      pin.image.startsWith('http://') || pin.image.startsWith('https://');
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +23,42 @@ class PinImage extends StatelessWidget {
         gaplessPlayback: true,
       );
     }
+
+    final errorWidget = Container(
+      color: pin.fallback,
+      alignment: Alignment.center,
+      child: const Icon(Icons.image_outlined, color: Colors.white54),
+    );
+
+    // Gambar dari URL jaringan (REST API).
+    if (_isUrl) {
+      return Image.network(
+        pin.image,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
+            color: pin.fallback,
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Colors.white54,
+            ),
+          );
+        },
+        errorBuilder: (_, _, _) => errorWidget,
+      );
+    }
+
+    // Gambar dari asset lokal.
     return Image.asset(
       pin.image,
       fit: BoxFit.cover,
       width: double.infinity,
       height: double.infinity,
-      errorBuilder: (context, error, stackTrace) => Container(
-        color: pin.fallback,
-        alignment: Alignment.center,
-        child: const Icon(Icons.image_outlined, color: Colors.white54),
-      ),
+      errorBuilder: (_, _, _) => errorWidget,
     );
   }
 }
