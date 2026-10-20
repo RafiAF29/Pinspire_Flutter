@@ -16,7 +16,7 @@ Nama aplikasi diplesetkan menjadi **Pinspire**.
 | Rafi Athillah Firmansyah | 24051214213 |
 | Tiyen Solly Grace Simare Mare | 24051214222 |
 | Angela Juniesther | 24051214223 |
-| Rahmadio Aknesia Putra | (24051214243) |
+| Rahmadio Aknesia Putra | 24051214243 |
 
 ## Tahap 1 - Alur masuk (sudah selesai)
 
