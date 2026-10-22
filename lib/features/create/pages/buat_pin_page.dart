@@ -99,6 +99,8 @@ class _BuatPinPageState extends State<BuatPinPage> {
 
   void _terbitkan() {
     final judul = _judulC.text.trim();
+    final deskripsi = _deskripsiC.text.trim();
+    final tautan = _tautanC.text.trim();
     final pin = Pin(
       id: 'buat_${DateTime.now().microsecondsSinceEpoch}',
       title: judul.isEmpty ? null : judul,
@@ -110,7 +112,12 @@ class _BuatPinPageState extends State<BuatPinPage> {
       likes: 0,
       comments: 0,
     );
-    PublishStore.instance.mulai(pin, papan: _papan);
+    PublishStore.instance.mulai(
+      pin,
+      papan: _papan,
+      deskripsi: deskripsi.isEmpty ? null : deskripsi,
+      tautan: tautan.isEmpty ? null : tautan,
+    );
     tabIndex.value = 0;
     Navigator.of(context).popUntil((r) => r.isFirst);
   }

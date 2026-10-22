@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/config/api_constants.dart';
 import '../models/pin.dart';
 
-/// State like per pin.
-/// Nanti toggle() diganti panggilan API (POST/DELETE /pins/{id}/like).
+/// State like per pin — sinkron dengan REST API.
 class LikeStore extends ChangeNotifier {
   LikeStore._();
   static final LikeStore instance = LikeStore._();
@@ -32,6 +34,7 @@ class LikeStore extends ChangeNotifier {
       // Unlike: heart kembali kosong, count turun, label hilang.
       _liked.remove(pin.id);
       _labelPinId = null;
+      _apiUnlike(pin.id);
     } else {
       // Like: heart merah, count naik, label "Suka" muncul sebentar.
       _liked.add(pin.id);
@@ -40,8 +43,40 @@ class LikeStore extends ChangeNotifier {
         _labelPinId = null;
         notifyListeners();
       });
+      _apiLike(pin.id);
     }
     notifyListeners();
+  }
+
+  /// Kirim like ke REST API (fire-and-forget).
+  Future<void> _apiLike(String pinId) async {
+    try {
+      final token = await _getToken();
+      if (token == null) return;
+      await http.post(
+        Uri.parse('${ApiConstants.baseUrl}/pins/$pinId/like'),
+        headers: ApiConstants.authHeaders(token),
+      );
+    } catch (_) {
+      // Gagal kirim ke server — state lokal tetap jalan.
+    }
+  }
+
+  /// Kirim unlike ke REST API (fire-and-forget).
+  Future<void> _apiUnlike(String pinId) async {
+    try {
+      final token = await _getToken();
+      if (token == null) return;
+      await http.delete(
+        Uri.parse('${ApiConstants.baseUrl}/pins/$pinId/like'),
+        headers: ApiConstants.authHeaders(token),
+      );
+    } catch (_) {}
+  }
+
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token');
   }
 
   @override

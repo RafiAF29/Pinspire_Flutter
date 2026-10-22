@@ -23,6 +23,15 @@ class _PapanTabState extends State<PapanTab> {
   bool _hanyaGroup = false;
   bool _hanyaPrivat = false;
 
+  @override
+  void initState() {
+    super.initState();
+    // Muat daftar papan dari API jika belum pernah dimuat.
+    if (!BoardStore.instance.sudahDimuat) {
+      BoardStore.instance.muat();
+    }
+  }
+
   void _tanyaHapus(Board papan) {
     showModalBottomSheet<void>(
       context: context,

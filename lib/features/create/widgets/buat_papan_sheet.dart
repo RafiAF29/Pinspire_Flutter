@@ -57,10 +57,11 @@ class _BuatPapanSheetState extends State<_BuatPapanSheet> {
 
   bool get _siap => _namaC.text.trim().isNotEmpty;
 
-  void _buat() {
+  void _buat() async {
     if (!_siap) return;
     final papan =
-        BoardStore.instance.buat(_namaC.text.trim(), privat: _privat);
+        await BoardStore.instance.buat(_namaC.text.trim(), privat: _privat);
+    if (!mounted) return;
     Navigator.of(context).pop(papan);
   }
 

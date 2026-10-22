@@ -1,17 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/config/api_constants.dart';
 import '../models/pin.dart';
 
-/// State pin yang disimpan.
+/// State pin yang disimpan — sinkron dengan REST API.
 ///
 /// Alur tombol di halaman detail:
 ///   Simpan (merah)  --tap-->  Disimpan (gelap, [justSavedDuration])  --otomatis-->  Profil (gelap)
 ///
 /// Tombol "Profil" membuka tab Disimpan. Batal simpan hanya bisa dari sana
 /// lewat [remove].
-/// Nanti save()/remove() diganti panggilan API (POST/DELETE /saved-pins).
 class SavedStore extends ChangeNotifier {
   SavedStore._();
   static final SavedStore instance = SavedStore._();
@@ -50,6 +52,7 @@ class SavedStore extends ChangeNotifier {
       notifyListeners();
     });
     notifyListeners();
+    _apiSave(pin.id);
   }
 
   /// Pin buatan sendiri yang sudah selesai diunggah ikut muncul di tab
@@ -70,6 +73,38 @@ class SavedStore extends ChangeNotifier {
       _timer?.cancel();
     }
     notifyListeners();
+    _apiUnsave(pin.id);
+  }
+
+  // ----------- REST API -----------
+
+  /// Kirim save ke REST API (fire-and-forget).
+  Future<void> _apiSave(String pinId) async {
+    try {
+      final token = await _getToken();
+      if (token == null) return;
+      await http.post(
+        Uri.parse('${ApiConstants.baseUrl}/pins/$pinId/save'),
+        headers: ApiConstants.authHeaders(token),
+      );
+    } catch (_) {}
+  }
+
+  /// Kirim unsave ke REST API (fire-and-forget).
+  Future<void> _apiUnsave(String pinId) async {
+    try {
+      final token = await _getToken();
+      if (token == null) return;
+      await http.delete(
+        Uri.parse('${ApiConstants.baseUrl}/pins/$pinId/save'),
+        headers: ApiConstants.authHeaders(token),
+      );
+    } catch (_) {}
+  }
+
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token');
   }
 
   @override
